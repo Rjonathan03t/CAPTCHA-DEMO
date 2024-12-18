@@ -6,8 +6,30 @@
     <title>Document</title>
     <script type="text/javascript" src="https://2b17d9cec338.eu-west-3.captcha-sdk.awswaf.com/2b17d9cec338/jsapi.js" defer></script>
 </head>
+<script type="text/javascript">
+    function showMyCaptcha() {
+        var container = document.querySelector("#my-captcha-container");
+        
+        AwsWafCaptcha.renderCaptcha(container, {
+            apiKey: "...API key goes here...",
+            onSuccess: captchaExampleSuccessFunction,
+            onError: captchaExampleErrorFunction,
+        });
+    }
+    
+    function captchaExampleSuccessFunction(wafToken) {
+        // Use WAF token to access protected resources
+        AwsWafIntegration.fetch("...WAF-protected URL...", {
+            method: "POST"
+        });
+    }
+    
+    function captchaExampleErrorFunction(error) {
+        /* Do something with the error */
+    }
+</script>
 <body>
-    <button>
+    <button onclick={showMyCaptcha()}>
         view captcha
     </button>
 </body>
